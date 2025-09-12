@@ -1,77 +1,89 @@
 ## Level 0 → 1
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  cd / && cd home && cd bandit0 && cat readme
+- Solution: Found the password inside the readme file.  
+- Key Takeaway: Learn to navigate directories and read files with cat.
 
 ## Level 1 → 2
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway:
+- Command(s) Used:  
+  cd / && cd home && cd bandit1 && ls && cat ./-
+- Solution: Read file named "-" using "./-"  
+- Key Takeaway: Special characters in filenames require careful handling.
 
 ## Level 2 → 3
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  cd / && cd home && cd bandit2 && ls && cat "./--spaces in this filename--"
+- Solution: Read file with spaces using quotes.  
+- Key Takeaway: Quotes help handle filenames with spaces and symbols.
 
 ## Level 3 → 4
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  cd / && cd home && cd bandit3 && ls && cd inhere && ls -la && cat "./...Hiding-From-You"
+- Solution: Found hidden file and read it.  
+- Key Takeaway: Use ls -la to see hidden files.
 
 ## Level 4 → 5
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  cd / && cd home && cd bandit4 && ls && cd inhere && ls -la && cat ./-file0
+- Solution: Password hidden in one of the "-file0" files.  
+- Key Takeaway: Iterate through multiple files when searching.
 
 ## Level 5 → 6
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway:
+- Command(s) Used:  
+  cd / && cd home && cd bandit5 && ls && cd inhere && ls -la && find . -type f -size 1033c ! -executable -print && cd ./maybehere07 && cat ./.file2
+- Solution: Found the password in a file of size 1033 bytes.  
+- Key Takeaway: Use find with conditions to locate specific files.
 
 ## Level 6 → 7
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null && cd /var/lib/dpkg/info && cat ./bandit7.password
+- Solution: Located the password file owned by bandit7 and group bandit6.  
+- Key Takeaway: Redirect errors with 2>/dev/null when searching system-wide.
 
 ## Level 7 → 8
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  ls && grep millionth data.txt
+- Solution: Found the line containing the word millionth.  
+- Key Takeaway: grep is powerful for searching text.
 
 ## Level 8 → 9
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  ls && wc -l data.txt && sort data.txt | uniq -u
+- Solution: Found the unique line in the file.  
+- Key Takeaway: Combine sort and uniq to find unique entries.
 
 ## Level 9 → 10
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway:
+- Command(s) Used:  
+  cd / && cd home && cd bandit9 && ls && strings data.txt
+- Solution: Extracted readable strings from binary data.  
+- Key Takeaway: strings is useful for searching binary files. One of my favorite commands for finding the information of a file without having to open it.
 
 ## Level 10 → 11
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  cd / && cd bandit10 && ls && cat data.txt && echo VGhlIHBhc3N3b3JkIGlzIGR0UjE3M2ZaS2IwUlJzREZTR3NnMlJXbnBOVmozcVJyCg== | base64 -d
+- Solution: Decoded Base64 text to reveal the password.  
+- Key Takeaway: Use base64 -d to decode Base64 encoded data.
 
 ## Level 11 → 12
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
-
+- Command(s) Used:  
+  cd / && cd bandit11 && ls && cat data.txt && cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+- Solution: Decoded ROT13 text to reveal the password.  
+- Key Takeaway: tr can be used for simple substitution ciphers.
 
 ## Level 12 → 13
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
-
+- Command(s) Used:  
+  mktemp -d && cd /tmp/tmp.weB0GlgHzc && cp ~/data.txt . && xxd -r data.txt data && file data && mv data data.gz && gunzip data.gz && file data && mv data data.bz2 && bunzip2 data.bz2 && mv data data.gz && gunzip data.gz && mv data data.tar && tar -xf data.tar && ls -l && file data5.bin && mv data5.bin data5.tar && tar -xf data5.tar && file data6.bin && mv data6.bin data6.bz2 && bunzip2 data6.bz2 && file data6 && mv data6 data6.tar && tar -xf data6.tar && file data8.bin && mv data8.bin data8.gz && gunzip data8.gz && file data8 && cat data8
+- Solution: Reversed hexdump and repeatedly decompressed until plain text revealed password.  
+- Key Takeaway: Layered compression teaches handling multiple archive formats. Can be annoying but hackers could become bored and give up before finding what they're looking for.
 
 ## Level 13 → 14
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
-
+- Command(s) Used:  
+  ls -l && chmod 600 sshkey.private && ssh -i sshkey.private bandit14@localhost -p 2220 && cat /etc/bandit_pass/bandit14
+- Solution: Used a private SSH key to log in as bandit14 and read the password file.  
+- Key Takeaway: SSH keys can authenticate without a password.
 
 ## Level 14 → 15
-- Command(s) Used: 
-- Solution: 
-- Key Takeaway: 
+- Command(s) Used:  
+  nc localhost 30000
+- Solution: Submitted current password via Netcat to port 30000 to retrieve the next password.  
+- Key Takeaway: Netcat is a skillful tool for network communication.
