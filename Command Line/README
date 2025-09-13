@@ -1,1 +1,5 @@
-What I learned
+This module gave me the chance to strengthen my command-line skills across both Linux and Windows. The TryHackMe and Linux Journey rooms helped me build a solid foundation with navigation, file operations, and permissions, while the Windows exercises showed me how similar concepts apply in a different environment. Even with some prior experience, repeating the basics made me faster and more confident.
+
+The OverTheWire Bandit challenges were the highlight for me. Each level forced me to think differently, and while I tried to solve them on my own, I also researched commands and concepts I wasn’t fully comfortable with. I especially enjoyed discovering tools like tr for ROT13, and I was pushed hardest by the hexdump and compression level, but pushing through it felt rewarding.
+
+Overall, the module reminded me why I love cybersecurity: you learn something new every day. I realized I need more practice memorizing what certain commands do (uniq, xxd, tr, etc.) and getting comfortable with compression tools, but this was a fun and valuable way to learn through problem-solving.
