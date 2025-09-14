@@ -1,24 +1,26 @@
-# Challenge 4: Detect single-character XOR in a file (one hex per line)
-# Put the puzzle file as set1/4.txt (from cryptopals)
-import binascii, pathlib
+import binascii
 
-def score(s: bytes) -> float:
-    freq = " etaoinshrdlcumwfgypbvkjxqETAOINSHRDLCUMWFGYPBVKJXQ'"
-    try: txt = s.decode()
-    except: return -1
-    return sum((i+1) for ch in txt for i,c in enumerate(freq) if ch==c)
+def score_english(s: bytes) -> float:
+    freq = "ETAOIN SHRDLUetaoinshrdlu"  # common letters
+    try:
+        text = s.decode()
+    except UnicodeDecodeError:
+        return 0
+    return sum(ch in freq for ch in text)
 
-best_line = None
-best = (-1,None,None)
-for line in pathlib.Path(__file__).with_name("4.txt").read_text().splitlines():
-    ct = binascii.unhexlify(line.strip())
-    for k in range(256):
-        pt = bytes(b ^ k for b in ct)
-        sc = score(pt)
-        if sc > best[0]:
-            best = (sc, k, pt)
-            best_line = line.strip()
+best_score = 0
+best_result = None
 
-print("line:", best_line)
-print("key:", best[1])
-print("plaintext:", best[2].decode(errors="replace"))
+with open("4.txt") as f:
+    for line in f:
+        ct = binascii.unhexlify(line.strip())
+        for key in range(256):
+            pt = bytes([c ^ key for c in ct])
+            sc = score_english(pt)
+            if sc > best_score:
+                best_score = sc
+                best_result = (pt, key, line.strip())
+
+print("Line:", best_result[2])
+print("Key:", best_result[1])
+print("Plaintext:", best_result[0].decode(errors="ignore"))
