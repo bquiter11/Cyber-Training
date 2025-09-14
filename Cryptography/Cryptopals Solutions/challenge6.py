@@ -1,5 +1,4 @@
 # Challenge 6: Break repeating-key XOR
-# Put the provided base64 blob in set1/6.txt
 import base64, itertools, pathlib
 
 def hamming(a: bytes, b: bytes) -> int:
@@ -9,7 +8,6 @@ def hamming(a: bytes, b: bytes) -> int:
 data_b64 = pathlib.Path(__file__).with_name("6.txt").read_text()
 ct = base64.b64decode(data_b64)
 
-# guess key sizes
 candidates = []
 for ks in range(2, 41):
     chunks = [ct[i:i+ks] for i in range(0, ks*8, ks)]
@@ -42,4 +40,4 @@ for _, ks in candidates[:5]:
         best_pt, best_key = test, key
 
 print("key:", best_key)
-print(best_pt[:500])  # print a chunk; file is long
+print(best_pt[:500])  
