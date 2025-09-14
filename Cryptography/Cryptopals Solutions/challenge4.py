@@ -11,7 +11,7 @@ def score_english(s: bytes) -> float:
 best_score = 0
 best_result = None
 
-with open("4.txt") as f:
+with open(r"C:\Users\brian\OneDrive\Documents\4.txt") as f:
     for line in f:
         ct = binascii.unhexlify(line.strip())
         for key in range(256):
@@ -24,3 +24,4 @@ with open("4.txt") as f:
 print("Line:", best_result[2])
 print("Key:", best_result[1])
 print("Plaintext:", best_result[0].decode(errors="ignore"))
+
