@@ -5,7 +5,7 @@ def hamming(a: bytes, b: bytes) -> int:
     x = int.from_bytes(a, 'big') ^ int.from_bytes(b, 'big')
     return x.bit_count()
 
-data_b64 = pathlib.Path(__file__).with_name("6.txt").read_text()
+data_b64 = open(r"C:\Users\brian\OneDrive\Documents\6.txt").read()
 ct = base64.b64decode(data_b64)
 
 candidates = []
@@ -41,3 +41,4 @@ for _, ks in candidates[:5]:
 
 print("key:", best_key)
 print(best_pt[:500])  
+
