@@ -1,44 +1,85 @@
-# Challenge 6: Break repeating-key XOR
-import base64, itertools, pathlib
+import base64
+from pathlib import Path
+import collections
 
 def hamming(a: bytes, b: bytes) -> int:
-    x = int.from_bytes(a, 'big') ^ int.from_bytes(b, 'big')
-    return x.bit_count()
+    if len(a) != len(b):
+        raise ValueError("equal lengths required")
+    return (int.from_bytes(a, "big") ^ int.from_bytes(b, "big")).bit_count()
 
-data_b64 = open(r"C:\Users\brian\OneDrive\Documents\6.txt").read()
-ct = base64.b64decode(data_b64)
+def repeating_xor(data: bytes, key: bytes) -> bytes:
+    return bytes(data[i] ^ key[i % len(key)] for i in range(len(data)))
 
-candidates = []
-for ks in range(2, 41):
-    chunks = [ct[i:i+ks] for i in range(0, ks*8, ks)]
-    if len(chunks) >= 2 and len(chunks[-1]) == ks:
-        d = sum(hamming(chunks[i], chunks[i+1]) for i in range(len(chunks)-1))
-        norm = d / (ks * (len(chunks)-1))
-        candidates.append((norm, ks))
-candidates.sort()
-
-def break_single_byte_xor(bs: bytes):
-    def score(s: bytes) -> float:
-        freq = " etaoinshrdlcumwfgypbvkjxqETAOINSHRDLCUMWFGYPBVKJXQ'"
-        try: t = s.decode()
-        except: return -1
-        return sum((i+1) for ch in t for i,c in enumerate(freq) if ch==c)
-    best = max(((k, bytes(b ^ k for b in bs)) for k in range(256)), key=lambda kv: score(kv[1]))
-    return best[0]
-
-best_pt, best_key = None, None
-for _, ks in candidates[:5]:
-    blocks = [ct[i:i+ks] for i in range(0, len(ct), ks)]
-    transposed = list(itertools.zip_longest(*blocks, fillvalue=0))
-    key = bytes(break_single_byte_xor(bytes(col)) for col in transposed)
-    pt = bytes(ct[i] ^ key[i % len(key)] for i in range(len(ct)))
+def english_score(bs: bytes) -> float:
     try:
-        test = pt.decode()
-    except:
-        continue
-    if best_pt is None or test.count(" ") > best_pt.count(" "):
-        best_pt, best_key = test, key
+        s = bs.decode("ascii")
+    except UnicodeDecodeError:
+        return float("inf")
+    if any(ord(c) < 9 or (13 < ord(c) < 32) for c in s):
+        return float("inf")
+    freq = {
+        ' ': 0.182, 'E': 0.102, 'T': 0.091, 'A': 0.081, 'O': 0.076, 'N': 0.073,
+        'I': 0.069, 'H': 0.069, 'S': 0.063, 'R': 0.061, 'D': 0.043, 'L': 0.040,
+        'U': 0.028, 'M': 0.025, 'W': 0.024, 'F': 0.022, 'C': 0.022, 'G': 0.020,
+        'Y': 0.020, 'P': 0.019, 'B': 0.015, 'V': 0.010, 'K': 0.008, 'X': 0.002,
+        'J': 0.002, 'Q': 0.001, 'Z': 0.001
+    }
+    counts = collections.Counter(c if c.isalpha() else ' ' for c in s.upper())
+    total = len(s)
+    chi = 0.0
+    for ch, exp in freq.items():
+        obs = counts.get(ch, 0) / total
+        chi += (obs - exp) ** 2 / (exp + 1e-9)
+    return chi
 
-print("key:", best_key)
-print(best_pt[:500])  
+def break_single_byte_xor(col: bytes) -> int:
+    best_k, best_sc = 0, float("inf")
+    for k in range(256):
+        pt = bytes(b ^ k for b in col)
+        sc = english_score(pt)
+        if sc < best_sc:
+            best_sc, best_k = sc, k
+    return best_k
 
+def main():
+    assert hamming(b"this is a test", b"wokka wokka!!!") == 37
+    path = Path(r"C:\Users\brian\OneDrive\Documents\6.txt")
+    if not path.exists():
+        raise FileNotFoundError(f"Could not find {path}")
+    b64_text = path.read_text().strip()
+    ct = base64.b64decode(b64_text)
+    candidates = []
+    for K in range(2, 41):
+        blocks = [ct[i:i+K] for i in range(0, K*4, K)]
+        if len(blocks[-1]) != K:
+            continue
+        d = (hamming(blocks[0], blocks[1]) +
+             hamming(blocks[1], blocks[2]) +
+             hamming(blocks[2], blocks[3])) / 3.0
+        candidates.append((d / K, K))
+    candidates.sort()
+    best_pt, best_key, best_sc = None, None, float("inf")
+    print("Top keysize guesses:", [k for _, k in candidates[:5]])
+    for _, K in candidates[:5]:
+        cols = []
+        for j in range(K):
+            col = bytearray()
+            for i in range(j, len(ct), K):
+                col.append(ct[i])
+            cols.append(bytes(col))
+        key = bytes(break_single_byte_xor(col) for col in cols)
+        pt = repeating_xor(ct, key)
+        sc = english_score(pt)
+        print(f"K={K:2d} key={key!r} score={sc:.2f}")
+        if sc < best_sc:
+            best_sc, best_key, best_pt = sc, key, pt
+    print("\nRecovered key (bytes):", best_key)
+    try:
+        print("Recovered key (ascii):", best_key.decode())
+    except UnicodeDecodeError:
+        pass
+    print("\nPlaintext preview:\n")
+    print(best_pt.decode(errors="replace")[:800])
+
+if __name__ == "__main__":
+    main()
