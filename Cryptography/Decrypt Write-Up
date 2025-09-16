@@ -1,1 +1,31 @@
+How to Decrypt a Caesar Cipher Message  
+
+When I first started messing with cryptography, it honestly felt kind of intimidating. I didn’t know much about the math behind it, and most of the time I just relied on online decoders to figure stuff out. But once I understood the basics of how one simple algorithm worked, it started making way more sense.  
+
+One of the easiest ciphers to understand is called the Caesar cipher. The idea is simple: every letter in the alphabet is “shifted” by the same amount. For example, if the shift is 3, then A becomes D, B becomes E, C becomes F, and so on. To encrypt a word like "HELLO" with a shift of 3, you’d get "KHOOR".  
+
+
+Steps to Decrypt  
+
+1. Look at the message 
+   Encrypted text:  
+
+    KHOOR
+
+2. Know the shift (or brute force it)  
+If the shift was 3, move each letter backwards by 3.  
+- K becomes H  
+- H becomes E  
+- O becomes L  
+- O becomes L  
+- R becomes O  
+
+That gives you "HELLO".  
+
+If you don’t know the shift, you can try all 25 possible shifts. That might sound annoying, but there are tons of online decoders that will show you all of them at once. Usually only one result will make sense in English.  
+
+The Big Idea  
+
+Decrypting is just reversing the shift. Once you figure out how many places the letters were shifted, you move them back the same amount.  
+
 
