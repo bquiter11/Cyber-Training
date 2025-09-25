@@ -1,0 +1,41 @@
+OSINT Exercise #018
+
+a. West Door of the Church
+
+used these terms:
+
+"Queen Elizabeth II" AND "coronation" AND "Westminster Abbey"
+
+
+"Elizabeth II, wearing the Imperial Crown and holding the Sceptre with the Cross and the Orb, left Westminster Abbey “through the Choir and the Nave to the West Door of the Church […] whilst all assembled sang the National Anthem.”" - 
+
+https://www.thegazette.co.uk/awards-and-accreditation/content/103597#:~:text=Elizabeth%20II%2C%20wearing%20the%20Imperial,assembled%20sang%20the%20National%20Anthem.%E2%80%9D 
+
+b. 4.5 miles long
+
+"The distance is a fraction of the 4.5-mile cavalcade Queen Elizabeth made in 1953 to see as many of the three million people who lined the streets of London as possible."
+
+- https://people.com/royals/king-charles-queen-camilla-coronation-procession-differs-queen-elizabeth-longer-route/
+
+used these terms: 
+
+"distance" AND "Queen Elizabeth" AND "coronation procession"
+
+c. 2.7 mph
+
+used these terms: "queen elizabeth" AND "coronation" AND "carriage" AND "speed"
+
+"'It can only go at a walking pace," Elizabeth said. 'The horses couldn't possibly go any faster. It's so heavy.'"
+
+- https://www.newsweek.com/king-charles-horrible-coronation-carriage-bumpy-ride-1795330
+
+
+https://www.nationalarchives.gov.uk/education/resources/significant-events/coronation-of-elizabeth-ii-1953/
+
+-From 2:50PM to 4:30PM (100 minutes/ 1.66667 hours)
+
+4.5/1.66667 = 2.69999460001
+
+
+
+
