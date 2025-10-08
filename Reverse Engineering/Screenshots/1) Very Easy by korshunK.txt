@@ -1,0 +1,26 @@
+1) Static analysis summary via Ghidra
+
+opened the file in Ghidra. Decompiled core observed in main() 
+
+Decompiled snippet:
+  char input[0x70];
+  scanf("%s", input);
+  rax = strcmp(input, "your mum is very sexy");
+  if (rax != 0) {
+      puts("you win!");
+      system("pause");
+  } else {
+      printf("you loose!");
+  }
+  return 0;
+
+what i think it means:
+
+-the password is in plain sight (your mum is very sexy)
+-the program is inverted. no matter what i type i still get "you win!". 
+-because the code is reversed (if (strcmp != 0) → win), i always get  “you win!”
+-i can't get it to say "you loose!" no matter how many words i type because the input function itself prevents it.
+
+
+
+

@@ -1,0 +1,35 @@
+2) EZ crack me
+
+auto analyzed decompiled entry:
+
+
+/* WARNING: Control flow encountered bad instruction data */
+
+void processEntry entry(void)
+
+{
+  code *pcVar1;
+  int *in_stack_00000008;
+  
+  if (password == *in_stack_00000008) {
+    pcVar1 = (code *)swi(0x80);
+    (*pcVar1)();
+  }
+  else {
+    pcVar1 = (code *)swi(0x80);
+    (*pcVar1)();
+  }
+  pcVar1 = (code *)swi(0x80);
+  (*pcVar1)();
+                    /* WARNING: Bad instruction - Truncating control flow here */
+  halt_baddata();
+}
+
+
+1. Used chat to help me explore functions of Ghidra. Saw the layout and found w0rd ou Got This! rong! Some spaces/letters were missing, so I wanted to explore more.
+
+2. Went to the Window function, clicked Defined Strings, found some strings, specifically one titled password. Didn't give me enough information so I kept digging. 
+
+3. Went to the Search for Strings button and made it so I can find strings. Had to search up what boxes/options to check for the most optimal search. After searching, I found at the very bottom "P455w0rdYou Got This!\nWrong!\n"
+
+4. This is the password!

@@ -1,0 +1,32 @@
+Easy_CrackMe Solved
+
+Used Binary Ninja
+
+Opened the Strings option under the View dropdown to look at strings
+
+Find success/failure messages (e.g. Incorrect Password, Congratulation !!, EasyCrackMe). Double-clicked to jump to the data.
+
+Found part of the password: "R3versing" (knew it wasn't the whole password because when I put it into the input box I got an Incorrect Password pop-up, so I knew to keep digging)
+
+Focusing on "Congratulation !!" box, specifically:
+
+(eax 4 == 0 && string == 0x45)
+
+0x45 is ascii value for 'E'
+
+backtrack and follow for the next checkup:
+
+(var_63 == 0x61)
+this is the ascii value for lowercase a
+
+went into Linear Disassembly mode and saw in plaintext "5y" located next to "R3versing"
+
+corresponding ascii values are 0x35 for 5 and ox79 for lowercase y.
+
+Putting all of those values together, I got:
+
+Ea5yR3versing
+
+That is the password. 
+
+This was a difficult challenge despite it being "easy". I have no experience with reverse engineering so while it is challenging, it's super fun being able to  break apart code and find out how applications work without having to brute force passwords! I used to just run strings in the terminal during CTF's and that would usually give me the password for a file like this (since they were easy and the password was just in plaintext), but I know that challenges won't always be that easy so it's important to learn the ins and outs of executables and programs even if it's daunting. 
